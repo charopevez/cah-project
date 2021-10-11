@@ -8,5 +8,4 @@ public class ServerHost {
     private String serverName;
     private String serverHostUsername;
     private ServerStatus serverStatus;
-
 }
