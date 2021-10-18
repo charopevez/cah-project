@@ -1,8 +1,5 @@
 package it.theboys.project0002api.service;
 
-import it.theboys.project0002api.model.Player;
-import it.theboys.project0002api.model.ServerHost;
-import it.theboys.project0002api.model.ServerStatus;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
