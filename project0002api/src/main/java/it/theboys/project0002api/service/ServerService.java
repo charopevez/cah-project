@@ -15,7 +15,7 @@ public class ServerService {
     public ServerHost hostServer(Player host){
         ServerHost server=new ServerHost();
         server.setServerId(UUID.randomUUID().toString());
-        server.setServerHostUsername(host.getUsername());
+        server.setServerHostUsername(host.getPlayername());
         server.setServerStatus(ServerStatus.NEW);
         return server;
     }

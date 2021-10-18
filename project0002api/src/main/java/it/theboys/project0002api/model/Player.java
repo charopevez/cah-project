@@ -4,12 +4,54 @@ import lombok.Data;
 
 @Data
 public class Player {
-    private String username;
+    private String playername;
+    private String password;
+    private String email;
+    private String avatar_url;
+    private int score = 0;
 
-    public void setUsername(String username){
-        this.username = username;
+    public void setPlayerrname(String playername){
+        this.playername = playername;
     }
-    public String getUsername(){
-        return username;
+    public String getPlayername(){
+        return playername;
     }
+
+    public void setPassword(String password){
+        this.password = password;
+    }
+    public String getPassword(){
+        return password;
+    }
+
+    public void setEmail(String email){
+        this.email = email;
+    }
+    public String getEmail(){
+        return email;
+    }
+
+    public void setAvatar_Url(String avatar_url){
+        this.avatar_url = avatar_url;
+    }
+    public String getAvatar_Url(){
+        return avatar_url;
+    }
+
+    public int getScore(){
+        return score;
+    }
+
+    public void increaseScore(){
+        score++;
+    }
+
+    public void resetScore(){
+        score = 0;
+    }
+
+    public Player(){
+        
+    }
+
 }
