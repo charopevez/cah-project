@@ -15,7 +15,7 @@ import java.util.AbstractMap;
 import java.util.stream.Stream;
 
 @SpringBootApplication
-@EnableMongoRepositories
+@EnableMongoRepositories(basePackages = "it.theboys.project0002api.repository")
 public class Project0002apiApplication {
 
 	public static void main(String[] args) {
