@@ -17,6 +17,7 @@ import java.util.Optional;
 
 @Service
 public class CardService {
+    @Autowired
     private CardSetRepository setRepo;
 
     public List<CardSet> getCardsBySet(String gameName) {
@@ -30,10 +31,10 @@ public class CardService {
     // add new set to DB
     public CardSet addSet(String gameName, CardSet set) throws ConstraintDeclarationException,CardSetCollectionException {
 
-        Optional<CardSet> setInDB=setRepo.findCardSetByGameNameAndSetName(gameName,set.getSetName());
-        if (setInDB.isPresent()){
-            throw new CardSetCollectionException(CardSetCollectionException.AlreadyExistException(gameName,set.getSetName()));
-        }
+//        Optional<CardSet> setInDB=setRepo.findCardSetByGameNameAndSetName(gameName,set.getSetName());
+//        if (setInDB.isPresent()){
+//            throw new CardSetCollectionException(CardSetCollectionException.AlreadyExistException(gameName,set.getSetName()));
+//        }
             set.setGameName(gameName);
             set.setAddedAt(Instant.now().toEpochMilli());
             return setRepo.save(set);
@@ -70,5 +71,13 @@ public class CardService {
             // TODO handle exception
         }
         return false;
+    }
+
+    public List<CardSet> getSets(String gameName) {
+        switch (gameName){
+            case "cah":
+                return setRepo.findAll();
+            default: return null;
+        }
     }
 }
