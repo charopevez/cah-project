@@ -90,40 +90,8 @@ public class CardService {
             throw new CardSetCollectionException(CardSetCollectionException.AlreadyExistException(gameName, newSetData.getSetName()));
         }
         CardSet updatingSet = setById.get();
-        // get all functions from class
-//        Method[] methods = updatingSet.getClass().getMethods();
-//
-//        for(Method fromMethod: methods){
-//            if(fromMethod.getDeclaringClass().equals(updatingSet.getClass())
-//                    && fromMethod.getName().startsWith("get")){
-//
-//                String fromName = fromMethod.getName();
-//                String toName = fromName.replace("get", "set");
-//
-//                try {
-//                    Method toMetod = updatingSet.getClass().getMethod(toName, fromMethod.getReturnType());
-//                    Object value = fromMethod.invoke(newSetData, (Object[])null);
-//                    if(value != null){
-//                        if (value instanceof String && value.toString().length() > 0) {
-//                            toMetod.invoke(updatingSet, value);
-//                        };
-//                        if (value instanceof Integer && (int)value > 0) {
-//                            toMetod.invoke(updatingSet, value);
-//                        };
-//                    }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-
-//        updatedSet.setSetExpansion(newSetData.getSetExpansion());
-//        updatedSet.setSetDescription(newSetData.getSetDescription());
-//        updatedSet.setPrivate(newSetData.isPrivate());
-//        updatedSet.setSetName(newSetData.getSetName());
-//        updatedSet.setSetAgeRestrictions(newSetData.getSetAgeRestrictions());
-//        updatedSet.setUpdatedAt(Instant.now().toEpochMilli());
-        return setRepo.save(new ObjectUtils<CardSet>().updateObjectFromObject(updatingSet,newSetData));
+        List<String> setterFilter= new ArrayList<String>();
+        return setRepo.save(new ObjectUtils<CardSet>().updateObjectFromObject(updatingSet,newSetData, setterFilter));
     }
 
     public boolean deleteSet(String id) throws CardSetCollectionException {
