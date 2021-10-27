@@ -1,12 +1,11 @@
 package it.theboys.project0002api.utils;
 
-import it.theboys.project0002api.dto.base.FilterConditionDto;
+import it.theboys.project0002api.dto.database.FilterConditionDto;
 import it.theboys.project0002api.enums.FilterOperationEnum;
 import it.theboys.project0002api.exception.database.BadRequestException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
-import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

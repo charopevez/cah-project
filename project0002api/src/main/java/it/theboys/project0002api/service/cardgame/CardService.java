@@ -1,7 +1,8 @@
 package it.theboys.project0002api.service.cardgame;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import it.theboys.project0002api.dto.base.FilterConditionDto;
+import it.theboys.project0002api.dto.database.FilterConditionDto;
+import it.theboys.project0002api.dto.database.QueryWithPageDTO;
 import it.theboys.project0002api.exception.database.CardSetCollectionException;
 import it.theboys.project0002api.exception.database.ImmutableFieldException;
 import it.theboys.project0002api.model.database.CardSet;
@@ -17,11 +18,10 @@ public interface CardService {
     /**
      * Get all custom paginate data for entity CardSet
      *
-     * @param query    custom query
-     * @param pageable pageable param
+     * @param request  {@link QueryWithPageDTO}
      * @return Page of entity CardSet
      */
-    Page<CardSet> getSets(Query query, Pageable pageable);
+    Page<CardSet> getSets(QueryWithPageDTO request);
     /**
      * Get all custom paginate data for entity CardSet
      *

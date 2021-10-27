@@ -31,4 +31,10 @@ public class BaseRepositoryHelper<T, I extends Serializable> extends SimpleMongo
 
         return new PageImpl<T>(content, pageable, total);
     }
+
+    @Override
+    public List<T> findAll(Query query) {
+        Assert.notNull(query, "Query must not be null!");
+        return mongoOperations.find(query, entityInformation.getJavaType(), entityInformation.getCollectionName());
+    }
 }

@@ -3,6 +3,7 @@ package it.theboys.project0002api.service.cardgame;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import it.theboys.project0002api.dto.database.QueryWithPageDTO;
 import it.theboys.project0002api.dto.http.request.SetListDto;
 import it.theboys.project0002api.exception.database.CardSetCollectionException;
 import it.theboys.project0002api.exception.database.ImmutableFieldException;
@@ -50,18 +51,18 @@ public class CardServiceImpl implements CardService {
         Map<String, List<CardSet>> responseBody = new HashMap<>();
         List<CardSet> added = new ArrayList<>();
         List<CardSet> existed = new ArrayList<>();
-        setList.getSetList().forEach(
-                (set) -> {
-                    Optional<CardSet> setInDB = setRepo.findCardSetByGameNameAndSetName(gameName, set.getSetName());
-                    if (setInDB.isPresent()) {
-                        existed.add(set);
-                    } else {
-                        set.setGameName(gameName);
-                        set.setAddedAt(Instant.now().toEpochMilli());
-                        added.add(setRepo.save(set));
-                    }
-                }
-        );
+//        setList.getSetList().forEach(
+//                (set) -> {
+//                    Optional<CardSet> setInDB = setRepo.findCardSetByGameNameAndSetName(gameName, set.getSetName());
+//                    if (setInDB.isPresent()) {
+//                        existed.add(set);
+//                    } else {
+//                        set.setGameName(gameName);
+//                        set.setAddedAt(Instant.now().toEpochMilli());
+//                        added.add(setRepo.save(set));
+//                    }
+//                }
+//        );
         responseBody.put("Success", added);
         responseBody.put("Failure", existed);
         return responseBody;
@@ -71,8 +72,8 @@ public class CardServiceImpl implements CardService {
      * {@inheritDoc}
      */
     @Override
-    public Page<CardSet> getSets(Query query, Pageable pageable) {
-        return setRepo.findAll(query, pageable);
+    public Page<CardSet> getSets(QueryWithPageDTO request) {
+        return setRepo.findAll(request.getQuery(), request.getPageable());
     }
 
     /**
@@ -104,10 +105,10 @@ public class CardServiceImpl implements CardService {
             return setRepo.save(newSetData);
         }
         //check if set with new name exist in this @param gameName
-        Optional<CardSet> setByName = setRepo.findCardSetByGameNameAndSetName(gameName, newSetData.getSetName());
-        if (setByName.isPresent() && !setByName.get().getId().equals(id)) {
-            throw new CardSetCollectionException(CardSetCollectionException.AlreadyExistException(gameName, newSetData.getSetName()));
-        }
+//        Optional<CardSet> setByName = setRepo.findCardSetByGameNameAndSetName(gameName, newSetData.getSetName());
+//        if (setByName.isPresent() && !setByName.get().getId().equals(id)) {
+//            throw new CardSetCollectionException(CardSetCollectionException.AlreadyExistException(gameName, newSetData.getSetName()));
+//        }
         CardSet updatingSet = setById.get();
         CardSet setToSave=new ObjectUtils<CardSet>().updateObjectFromObject(updatingSet,newSetData, immutableSetFields);
         setToSave.setUpdatedAt(Instant.now().toEpochMilli());

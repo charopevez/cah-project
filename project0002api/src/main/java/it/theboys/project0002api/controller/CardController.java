@@ -2,19 +2,17 @@ package it.theboys.project0002api.controller;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import it.theboys.project0002api.dto.base.FilterConditionDto;
+import it.theboys.project0002api.dto.database.QueryWithPageDTO;
 import it.theboys.project0002api.dto.http.response.PageResponseDTO;
+import it.theboys.project0002api.exception.database.BadRequestException;
 import it.theboys.project0002api.exception.database.CardSetCollectionException;
 import it.theboys.project0002api.exception.database.ImmutableFieldException;
 import it.theboys.project0002api.model.database.CahCard;
 import it.theboys.project0002api.model.database.CardSet;
 import it.theboys.project0002api.service.cardgame.CardService;
-import it.theboys.project0002api.utils.FilterBuilderUtils;
-import it.theboys.project0002api.utils.MongoQueryBuilderUtils;
+import it.theboys.project0002api.utils.ControllerUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -83,22 +81,25 @@ public class CardController {
             @RequestParam(value = "filterAnd", required = false) String filterAnd,
             @RequestParam(value = "orderBy", required = false) String orderBy) {
         // initialize variable to be returned
-        PageResponseDTO<CardSet> responseBody = new PageResponseDTO<>();
-        FilterBuilderUtils filterBuilder = new FilterBuilderUtils();
-        // create pagination for query
-        Pageable pageable = filterBuilder.getPageable(pageSize, pageNumber, orderBy);
-        MongoQueryBuilderUtils queryBuilder = new MongoQueryBuilderUtils();
-        // create list of Conditions
-        List<FilterConditionDto> andConditions=filterBuilder.createFilter(filterAnd);
-        List<FilterConditionDto> orConditions=filterBuilder.createFilter(filterOr);
-        // create mongodb query for db by adding filter condition
-        Query filerQuery = queryBuilder.addCondition(andConditions, orConditions);
-        Page<CardSet> page = cardService.getSets(filerQuery, pageable);
-        responseBody.setPageStats(page, page.getContent());
-        return new ResponseEntity<>(responseBody, HttpStatus.OK);
-//        return (setList.size() > 0) ?
-//                new ResponseEntity<>(responseBody, HttpStatus.OK) :
-//                new ResponseEntity<>(String.format("Game %s not exists or doesn't have any set", gameName), HttpStatus.NOT_FOUND);
+        try {
+            PageResponseDTO<CardSet> responseBody = new PageResponseDTO<>();
+//        FilterBuilderUtils filterBuilder = new FilterBuilderUtils();
+//        // create pagination for query
+//        Pageable pageable = filterBuilder.getPageable(pageSize, pageNumber, orderBy);
+//        MongoQueryBuilderUtils queryBuilder = new MongoQueryBuilderUtils();
+//        // create list of Conditions
+//        List<FilterConditionDto> andConditions=filterBuilder.createFilter(filterAnd);
+//        List<FilterConditionDto> orConditions=filterBuilder.createFilter(filterOr);
+//        // create mongodb query for db by adding filter condition
+//        Query filerQuery = queryBuilder.addCondition(andConditions, orConditions);
+            QueryWithPageDTO serviceRequest = new ControllerUtils().generateFilterAndPaginationRepositoryQuery(
+                    pageSize, pageNumber, orderBy, filterAnd, filterOr);
+            Page<CardSet> page = cardService.getSets(serviceRequest);
+            responseBody.setPageStats(page, page.getContent());
+            return new ResponseEntity<>(responseBody, HttpStatus.OK);
+        } catch (BadRequestException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/{gameName}/set/{id}")

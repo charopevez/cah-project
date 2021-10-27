@@ -1,6 +1,6 @@
 package it.theboys.project0002api.utils;
 
-import it.theboys.project0002api.dto.base.FilterConditionDto;
+import it.theboys.project0002api.dto.database.FilterConditionDto;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
