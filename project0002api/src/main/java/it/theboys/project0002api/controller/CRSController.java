@@ -1,16 +1,6 @@
 package it.theboys.project0002api.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import it.theboys.project0002api.exception.database.CardSetCollectionException;
-import it.theboys.project0002api.model.base.CardSet;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.ConstraintViolationException;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1/")

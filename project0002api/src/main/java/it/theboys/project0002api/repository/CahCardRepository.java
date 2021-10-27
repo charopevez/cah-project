@@ -1,6 +1,6 @@
 package it.theboys.project0002api.repository;
 
-import it.theboys.project0002api.model.base.CahCard;
+import it.theboys.project0002api.model.database.CahCard;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package it.theboys.project0002api.model.base;
+package it.theboys.project0002api.model.database;
 
 import it.theboys.project0002api.enums.cah.CahCardAction;
 import it.theboys.project0002api.enums.cah.CahCardType;

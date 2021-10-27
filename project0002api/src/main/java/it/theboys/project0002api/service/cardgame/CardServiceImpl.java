@@ -1,14 +1,19 @@
-package it.theboys.project0002api.service.game;
+package it.theboys.project0002api.service.cardgame;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import it.theboys.project0002api.dto.base.SetListDto;
+import it.theboys.project0002api.dto.http.request.SetListDto;
 import it.theboys.project0002api.exception.database.CardSetCollectionException;
-import it.theboys.project0002api.model.base.CardSet;
+import it.theboys.project0002api.exception.database.ImmutableFieldException;
+import it.theboys.project0002api.model.database.CardSet;
 import it.theboys.project0002api.repository.CardSetRepository;
 import it.theboys.project0002api.utils.ObjectUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintDeclarationException;
@@ -17,10 +22,14 @@ import java.util.*;
 
 
 @Service
-public class CardService {
-    @Autowired
-    private CardSetRepository setRepo;
+@RequiredArgsConstructor
+public class CardServiceImpl implements CardService {
+    private final CardSetRepository setRepo;
+    private final String[] immutableSetFields=new String[]{"id", "gameName", "addedAt", "updatedAt"};
 
+    /**
+            * {@inheritDoc}
+     */
     public List<CardSet> getCardsBySet(String gameName) {
         switch (gameName) {
             case "cah":
@@ -30,7 +39,10 @@ public class CardService {
         }
     }
 
-    // add new set to DB
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Map<String, List<CardSet>> addSet(String gameName, String json) throws ConstraintDeclarationException, CardSetCollectionException, JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
@@ -55,16 +67,19 @@ public class CardService {
         return responseBody;
     }
 
-    public List<CardSet> getSets(String gameName) {
-        switch (gameName) {
-            case "cah":
-                return setRepo.findAll();
-            default:
-                return null;
-        }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Page<CardSet> getSets(Query query, Pageable pageable) {
+        return setRepo.findAll(query, pageable);
     }
 
-    public CardSet findSetById(String id) throws CardSetCollectionException {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CardSet getSetById(String id) throws CardSetCollectionException {
 
         Optional<CardSet> set = setRepo.findById(id);
         if (set.isPresent()) {
@@ -74,8 +89,12 @@ public class CardService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     // TODO add user yo setAuthor
-    public CardSet updateSet(String id, CardSet newSetData, String gameName) throws CardSetCollectionException {
+    public CardSet updateSet(String id, CardSet newSetData, String gameName) throws CardSetCollectionException, ImmutableFieldException {
         Optional<CardSet> setById = setRepo.findById(id);
         // check if set with @param id is exists
         if (setById.isEmpty()) {
@@ -90,18 +109,22 @@ public class CardService {
             throw new CardSetCollectionException(CardSetCollectionException.AlreadyExistException(gameName, newSetData.getSetName()));
         }
         CardSet updatingSet = setById.get();
-        List<String> setterFilter= new ArrayList<String>();
-        return setRepo.save(new ObjectUtils<CardSet>().updateObjectFromObject(updatingSet,newSetData, setterFilter));
+        CardSet setToSave=new ObjectUtils<CardSet>().updateObjectFromObject(updatingSet,newSetData, immutableSetFields);
+        setToSave.setUpdatedAt(Instant.now().toEpochMilli());
+        return setRepo.save(setToSave);
     }
 
-    public boolean deleteSet(String id) throws CardSetCollectionException {
-        try {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void deleteSet(String id) throws CardSetCollectionException {
+        Optional<CardSet> setById = setRepo.findById(id);
+        if (setById.isPresent()) {
             setRepo.deleteById(id);
-            return true;
-        } catch (Exception e) {
-            // TODO handle exception
+        } else {
+            throw new CardSetCollectionException(CardSetCollectionException.NotFoundException(id));
         }
-        return false;
     }
 
 

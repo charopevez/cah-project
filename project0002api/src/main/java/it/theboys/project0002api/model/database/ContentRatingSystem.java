@@ -1,4 +1,4 @@
-package it.theboys.project0002api.model.base;
+package it.theboys.project0002api.model.database;
 
 
 import lombok.Data;
