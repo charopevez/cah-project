@@ -83,15 +83,6 @@ public class CardController {
         // initialize variable to be returned
         try {
             PageResponseDTO<CardSet> responseBody = new PageResponseDTO<>();
-//        FilterBuilderUtils filterBuilder = new FilterBuilderUtils();
-//        // create pagination for query
-//        Pageable pageable = filterBuilder.getPageable(pageSize, pageNumber, orderBy);
-//        MongoQueryBuilderUtils queryBuilder = new MongoQueryBuilderUtils();
-//        // create list of Conditions
-//        List<FilterConditionDto> andConditions=filterBuilder.createFilter(filterAnd);
-//        List<FilterConditionDto> orConditions=filterBuilder.createFilter(filterOr);
-//        // create mongodb query for db by adding filter condition
-//        Query filerQuery = queryBuilder.addCondition(andConditions, orConditions);
             QueryWithPageDTO serviceRequest = new ControllerUtils().generateFilterAndPaginationRepositoryQuery(
                     pageSize, pageNumber, orderBy, filterAnd, filterOr);
             Page<CardSet> page = cardService.getSets(serviceRequest);
