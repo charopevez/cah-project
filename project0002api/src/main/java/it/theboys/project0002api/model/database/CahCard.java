@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Map;
 
 @Data
-@Document
+@Document(collection="CahCards")
 @CompoundIndexes({
         @CompoundIndex(name = "cardSet_cardText", def = "{'cardsSet' : 1, 'cardText': 1}", unique = true)
 })

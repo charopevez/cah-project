@@ -19,9 +19,19 @@ public interface CardService {
      * Get all custom paginate data for entity CardSet
      *
      * @param request  {@link QueryWithPageDTO}
-     * @return Page of entity CardSet
+     * @return Page of entity CardSet {@link CardSet}
      */
-    Page<CardSet> getSets(QueryWithPageDTO request);
+    Page<CardSet> getSetPages(QueryWithPageDTO request);
+
+    /**
+     * Get all custom data for entity CardSet
+     *
+     * @param serviceRequest custom mongoDB Query
+     * @return list of entity Cardset {@link CardSet}
+     */
+    List<CardSet> getSets(Query serviceRequest);
+
+
     /**
      * Get all custom paginate data for entity CardSet
      *
@@ -30,6 +40,8 @@ public interface CardService {
      * @return Map<String, List<CardSet>>
      */
     Map<String, List<CardSet>> addSet(String gameName, String json) throws CardSetCollectionException, JsonProcessingException;
+
+
 
     /**
      * Return Set Info and all cards in this set
@@ -56,4 +68,6 @@ public interface CardService {
      *
      */
     void deleteSet(String id) throws CardSetCollectionException;
+
+
 }

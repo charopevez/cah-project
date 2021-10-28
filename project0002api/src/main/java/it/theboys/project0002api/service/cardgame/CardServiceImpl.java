@@ -51,18 +51,18 @@ public class CardServiceImpl implements CardService {
         Map<String, List<CardSet>> responseBody = new HashMap<>();
         List<CardSet> added = new ArrayList<>();
         List<CardSet> existed = new ArrayList<>();
-//        setList.getSetList().forEach(
-//                (set) -> {
-//                    Optional<CardSet> setInDB = setRepo.findCardSetByGameNameAndSetName(gameName, set.getSetName());
-//                    if (setInDB.isPresent()) {
-//                        existed.add(set);
-//                    } else {
-//                        set.setGameName(gameName);
-//                        set.setAddedAt(Instant.now().toEpochMilli());
-//                        added.add(setRepo.save(set));
-//                    }
-//                }
-//        );
+        setList.getSetList().forEach(
+                (set) -> {
+                    Optional<CardSet> setInDB = setRepo.findCardSetByGameNameAndSetName(gameName, set.getSetName());
+                    if (setInDB.isPresent()) {
+                        existed.add(set);
+                    } else {
+                        set.setGameName(gameName);
+                        set.setAddedAt(Instant.now().toEpochMilli());
+                        added.add(setRepo.save(set));
+                    }
+                }
+        );
         responseBody.put("Success", added);
         responseBody.put("Failure", existed);
         return responseBody;
@@ -72,8 +72,16 @@ public class CardServiceImpl implements CardService {
      * {@inheritDoc}
      */
     @Override
-    public Page<CardSet> getSets(QueryWithPageDTO request) {
+    public Page<CardSet> getSetPages(QueryWithPageDTO request) {
         return setRepo.findAll(request.getQuery(), request.getPageable());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<CardSet> getSets(Query serviceRequest) {
+        return setRepo.findAll(serviceRequest);
     }
 
     /**

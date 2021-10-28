@@ -13,6 +13,7 @@ import it.theboys.project0002api.service.cardgame.CardService;
 import it.theboys.project0002api.utils.ControllerUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -65,6 +66,8 @@ public class CardController {
     //region CardSet Endpoints
 
     /**
+     * search with pagination
+     *
      * @param pageNumber page number
      * @param pageSize   page item count
      * @param filterOr   string filter or conditions
@@ -72,8 +75,8 @@ public class CardController {
      * @param orderBy    sting order items by
      * @return PageResponse<CardSet>
      */
-    @GetMapping("/{gameName}/set")
-    public ResponseEntity<?> fetchCardSetsName(
+    @GetMapping("/{gameName}/set/page")
+    public ResponseEntity<?> fetchSetByPages(
             @PathVariable String gameName,
             @RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
             @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
@@ -85,8 +88,32 @@ public class CardController {
             PageResponseDTO<CardSet> responseBody = new PageResponseDTO<>();
             QueryWithPageDTO serviceRequest = new ControllerUtils().generateFilterAndPaginationRepositoryQuery(
                     pageSize, pageNumber, orderBy, filterAnd, filterOr);
-            Page<CardSet> page = cardService.getSets(serviceRequest);
+            Page<CardSet> page = cardService.getSetPages(serviceRequest);
             responseBody.setPageStats(page, page.getContent());
+            return new ResponseEntity<>(responseBody, HttpStatus.OK);
+        } catch (BadRequestException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * search without pagination
+     *
+     * @param filterOr   string filter or conditions
+     * @param filterAnd  string filter and conditions
+     * @return PageResponse<CardSet>
+     */
+    @GetMapping("/{gameName}/set")
+    public ResponseEntity<?> fetchSet(
+            @PathVariable String gameName,
+            @RequestParam(value = "filterOr", required = false) String filterOr,
+            @RequestParam(value = "filterAnd", required = false) String filterAnd){
+        // initialize variable to be returned
+        try {
+
+            Query serviceRequest = new ControllerUtils().generateFilterRepositoryQuery(
+                    filterAnd, filterOr);
+            List<CardSet> responseBody = cardService.getSets(serviceRequest);
             return new ResponseEntity<>(responseBody, HttpStatus.OK);
         } catch (BadRequestException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
