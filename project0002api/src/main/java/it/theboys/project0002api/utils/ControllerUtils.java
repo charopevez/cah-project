@@ -2,7 +2,8 @@ package it.theboys.project0002api.utils;
 
 import it.theboys.project0002api.dto.database.FilterConditionDto;
 import it.theboys.project0002api.dto.database.QueryWithPageDTO;
-import org.springframework.data.domain.Pageable;
+import it.theboys.project0002api.utils.database.FilterBuilderUtils;
+import it.theboys.project0002api.utils.database.MongoQueryBuilderUtils;
 import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.List;
