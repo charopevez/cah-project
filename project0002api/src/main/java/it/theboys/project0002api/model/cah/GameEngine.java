@@ -1,10 +1,18 @@
-package it.theboys.project0002api.model;
+package it.theboys.project0002api.model.cah;
 
 import lombok.Data;
 import java.util.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import it.theboys.project0002api.model.Card;
+import it.theboys.project0002api.model.Player;
+
 
 @Data
-public class GameServer {
+public class GameEngine {
+
+    private static final Logger logger = LogManager.getLogger(GameEngine.class);
     
     private String serverHost;
     private String currentQuestion;
@@ -14,7 +22,7 @@ public class GameServer {
     private String settings;
     
     private int currentRound;
-    private int currentDealer;
+    private int currentKaiser;
 
     public void setServerHost(String Host){
         this.serverHost = Host;
@@ -65,28 +73,43 @@ public class GameServer {
         return currentRound;
     }
 
-    public void setCurrentDealer(int dealer){
-        this.currentDealer = dealer;
+    public void setCurrentKaiser(int kaiser){
+        this.currentKaiser = kaiser;
     }
-    public int getCurrentDealer(){
-        return currentDealer;
+    public int getCurrentKaiser(){
+        return currentKaiser;
     }
 
-    Map<Integer, String> map = new HashMap<>();
-
-    public void getHand(){
+    public String start() throws Exception{
         Player player = new Player();
-    }
+        int numPlayers = player.playerList.size();
+        while(true){
+            if(numPlayers >= 3){
+                currentKaiser = (int)(Math.random() * numPlayers);
 
-    public void start() throws Exception{
-        GameLobby gamelobby = new GameLobby();
-        int numPlayers = gamelobby.players.size();
-        if(numPlayers >= 3){
-            currentDealer = (int)(Math.random() * numPlayers);
-
-            //カードセットの処理
-        }else{
-            throw new Exception("プレイヤーがゲームの最低要件を満たしていません。");
+                
+                return "Success !!";
+                //カードセットの処理
+            }else{
+                throw new Exception("プレイヤーがゲームの最低要件を満たしていません。");
+            }
         }
     }
+
+    public void choseWhiteCard(){
+        Player player = new Player();
+        for(int i = 0; i <= player.playerList.size(); i++){
+            //playerがwhiteカードを選ぶ処理
+        }
+    }
+
+    public void judgeCard(Player player, Card whiteCard){
+        //select winner
+    }
+
+    public void nextKaiser(){
+        //winnerを次のKaizerに設定
+    }
+
+    
 }
