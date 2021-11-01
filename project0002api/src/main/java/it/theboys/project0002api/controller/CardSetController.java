@@ -56,7 +56,7 @@ public class CardSetController {
                     filterAnd.length()>0 ? "&" : "",
                     gameName));
             QueryWithPageDTO serviceRequest = new ControllerUtils().generateFilterAndPaginationRepositoryQuery(
-                    pageSize, pageNumber, orderBy, filterAnd, filterOr);
+                    pageSize, pageNumber, orderBy, filterAnd, filterOr,"setName");
             Page<CardSet> page = cardService.getSetPages(serviceRequest);
             responseBody.setPageStats(page, page.getContent());
             return new ResponseEntity<>(responseBody, HttpStatus.OK);
@@ -81,7 +81,7 @@ public class CardSetController {
         try {
 
             Query serviceRequest = new ControllerUtils().generateFilterRepositoryQuery(
-                    filterAnd, filterOr);
+                    filterAnd, filterOr, "setName");
             // append gameName filter to filters
             filterAnd=filterAnd.concat(String.format(
                     "%sgameName|eq|%s",

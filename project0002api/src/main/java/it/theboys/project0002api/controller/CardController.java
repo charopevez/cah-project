@@ -25,64 +25,6 @@ public class CardController {
     private final CardService cardService;
 
 
-//
-//    /**
-//     * search with pagination
-//     *
-//     * @param pageNumber page number
-//     * @param pageSize   page item count
-//     * @param filterOr   string filter or conditions
-//     * @param filterAnd  string filter and conditions
-//     * @param orderBy    sting order items by
-//     * @return ResponseEntity with PageResponseDTO for {@link CardSet}
-//     */
-//    @GetMapping("/{gameName}/set/page")
-//    public ResponseEntity<?> fetchSetByPages(
-//            @PathVariable String gameName,
-//            @RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
-//            @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
-//            @RequestParam(value = "filterOr", required = false) String filterOr,
-//            @RequestParam(value = "filterAnd", required = false) String filterAnd,
-//            @RequestParam(value = "orderBy", required = false) String orderBy) {
-//        // initialize variable to be returned
-//        try {
-//            PageResponseDTO<CardSet> responseBody = new PageResponseDTO<>();
-//            QueryWithPageDTO serviceRequest = new ControllerUtils().generateFilterAndPaginationRepositoryQuery(
-//                    pageSize, pageNumber, orderBy, filterAnd, filterOr);
-//            Page<CardSet> page = cardService.getSetPages(serviceRequest);
-//            responseBody.setPageStats(page, page.getContent());
-//            return new ResponseEntity<>(responseBody, HttpStatus.OK);
-//        } catch (BadRequestException e) {
-//            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-//        }
-//    }
-//
-//    /**
-//     * search without pagination
-//     *
-//     * @param filterOr   string filter or conditions
-//     * @param filterAnd  string filter and conditions
-//     * @return ResponseEntity with List of {@link CardSet}
-//     */
-//    @GetMapping("/{gameName}/set")
-//    public ResponseEntity<?> fetchSet(
-//            @PathVariable String gameName,
-//            @RequestParam(value = "filterOr", required = false) String filterOr,
-//            @RequestParam(value = "filterAnd", required = false) String filterAnd){
-//        // initialize variable to be returned
-//        try {
-//
-//            Query serviceRequest = new ControllerUtils().generateFilterRepositoryQuery(
-//                    filterAnd, filterOr);
-//            List<CardSet> responseBody = cardService.getSets(serviceRequest);
-//            return new ResponseEntity<>(responseBody, HttpStatus.OK);
-//        } catch (BadRequestException e) {
-//            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-//        }
-//    }
-//
-
-
     @PostMapping("/{gameName}/card")
     public ResponseEntity<?> addCard(
             @PathVariable GameName gameName,
@@ -123,7 +65,7 @@ public class CardController {
                     gameName));
             // generate request for cardService
             QueryWithPageDTO serviceRequest = new ControllerUtils().generateFilterAndPaginationRepositoryQuery(
-                    pageSize, pageNumber, orderBy, filterAnd, filterOr);
+                    pageSize, pageNumber, orderBy, filterAnd, filterOr, "cardText");
             // get paginated response
             Page<CahCard> page = cardService.getCardPages(serviceRequest);
             // append stats to page section
@@ -154,7 +96,7 @@ public class CardController {
                     filterAnd.length()>0 ? "&" : "",
                     gameName));
             Query serviceRequest = new ControllerUtils().generateFilterRepositoryQuery(
-                    filterAnd, filterOr);
+                    filterAnd, filterOr, "cardText");
             List<CahCard> responseBody = cardService.getCards(serviceRequest);
             return new ResponseEntity<>(responseBody, HttpStatus.OK);
         } catch (BadRequestException e) {
