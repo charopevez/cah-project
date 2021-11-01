@@ -1,4 +1,4 @@
-package it.theboys.project0002api.model.database;
+package it.theboys.project0002api.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

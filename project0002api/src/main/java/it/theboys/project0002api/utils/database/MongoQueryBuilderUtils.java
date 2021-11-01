@@ -1,4 +1,4 @@
-package it.theboys.project0002api.utils;
+package it.theboys.project0002api.utils.database;
 
 import it.theboys.project0002api.dto.database.FilterConditionDto;
 import org.springframework.data.mongodb.core.query.Criteria;
