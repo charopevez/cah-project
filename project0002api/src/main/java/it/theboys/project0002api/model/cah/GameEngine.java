@@ -5,9 +5,8 @@ import java.util.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import it.theboys.project0002api.enums.cah.GameEngineStatus;
 import it.theboys.project0002api.model.Card;
-import it.theboys.project0002api.model.Player;
-
 
 @Data
 public class GameEngine {
@@ -80,22 +79,6 @@ public class GameEngine {
         return currentKaiser;
     }
 
-    public String start() throws Exception{
-        Player player = new Player();
-        int numPlayers = player.playerList.size();
-        while(true){
-            if(numPlayers >= 3){
-                currentKaiser = (int)(Math.random() * numPlayers);
-
-                
-                return "Success !!";
-                //カードセットの処理
-            }else{
-                throw new Exception("プレイヤーがゲームの最低要件を満たしていません。");
-            }
-        }
-    }
-
     public void choseWhiteCard(){
         Player player = new Player();
         for(int i = 0; i <= player.playerList.size(); i++){
@@ -109,6 +92,38 @@ public class GameEngine {
 
     public void nextKaiser(){
         //winnerを次のKaizerに設定
+    }   
+
+
+    private GameEngineStatus status;
+
+    public void run(){
+        
+    }
+
+    public String start() throws Exception{
+        // while(true){
+        //     if(numPlayers >= 3){
+        //         currentKaiser = (int)(Math.random() * numPlayers);
+
+                
+        //         return "Success !!";
+        //         //カードセットの処理
+        //     }else{
+        //         throw new Exception("プレイヤー数がゲームの最低要件を満たしていません。");
+        //     }
+        // }
+        status = GameEngineStatus.RUNNING;
+
+        return "Game start";
+    }
+
+
+    public String pause() throws Exception{
+        
+        status = GameEngineStatus.PAUSED;
+
+        return "Game pause";
     }
 
     
