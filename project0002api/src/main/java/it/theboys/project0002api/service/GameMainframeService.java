@@ -1,4 +1,4 @@
-package it.theboys.project0002api.service.cardgame;
+package it.theboys.project0002api.service;
 
 
 import it.theboys.project0002api.dto.http.request.GameServerLaunchRequestDto;

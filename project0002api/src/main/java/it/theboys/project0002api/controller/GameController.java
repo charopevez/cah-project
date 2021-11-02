@@ -2,7 +2,7 @@ package it.theboys.project0002api.controller;
 
 import it.theboys.project0002api.dto.http.request.GameServerLaunchRequestDto;
 import it.theboys.project0002api.enums.GameName;
-import it.theboys.project0002api.service.cardgame.GameMainframeService;
+import it.theboys.project0002api.service.GameMainframeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
