@@ -16,7 +16,7 @@ public class CahGameConfigSerializer extends StdSerializer<CahGameConfig> {
 
     @Override
     public void serialize(CahGameConfig value, JsonGenerator gen, SerializerProvider provider) throws IOException {
-        String baseURL="api/v1/CAH/set/";
+        String baseURL="/api/v1/CAH/set/";
         gen.writeStartObject();
         gen.writeArrayFieldStart("playerLimit");
         gen.writeNumber(value.getPlayerLimit()[0]);
