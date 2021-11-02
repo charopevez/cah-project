@@ -77,9 +77,14 @@ public class CardSetController {
      */
     @GetMapping("/{gameName}/set")
     public ResponseEntity<?> fetchSet(
-            @PathVariable String gameName,
+            @PathVariable GameName gameName,
+            @RequestParam(value = "setList", required = false) String[] setList,
             @RequestParam(value = "filterOr", required = false) String filterOr,
             @RequestParam(value = "filterAnd", required = false) String filterAnd) {
+        //check if setlist param exist
+        if(setList!=null){
+            return new ResponseEntity<>(cardService.getSetByIdList(gameName,setList), HttpStatus.OK);
+        }
         // initialize variable to be returned
         try {
 
@@ -205,5 +210,6 @@ public class CardSetController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+
 
 }

@@ -15,4 +15,6 @@ public interface CahCardRepository extends BaseRepository<CahCard, String> {
 
     Page<CahCard> findPagedCahCardByCardSet(CardSet cardSet, Pageable pageable);
 
+
+
 }

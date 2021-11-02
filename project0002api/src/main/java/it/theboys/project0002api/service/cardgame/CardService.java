@@ -2,6 +2,7 @@ package it.theboys.project0002api.service.cardgame;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import it.theboys.project0002api.dto.database.QueryWithPageDTO;
+import it.theboys.project0002api.dto.database.SimplifiedCahCardListDto;
 import it.theboys.project0002api.dto.http.request.AddCardRequestDto;
 import it.theboys.project0002api.dto.http.response.PagedSetWithCardsResponseDto;
 import it.theboys.project0002api.dto.http.response.SetWithCardsResponseDto;
@@ -99,4 +100,6 @@ public interface CardService {
 
 
     List<CardSet> getAllSets(GameName gameName);
+
+    SimplifiedCahCardListDto getSetByIdList(GameName gameName, String[] ids);
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.theboys.project0002api.dto.database.QueryWithPageDTO;
+import it.theboys.project0002api.dto.database.SimplifiedCahCardListDto;
 import it.theboys.project0002api.dto.http.request.AddCardRequestDto;
 import it.theboys.project0002api.dto.http.request.AddSetRequestDto;
 import it.theboys.project0002api.dto.http.response.PagedSetWithCardsResponseDto;
@@ -207,6 +208,16 @@ public class CardServiceImpl implements CardService {
     @Override
     public List<CardSet> getAllSets(GameName gameName) {
         return setRepo.findCardSetByGameName(gameName);
+    }
+
+    @Override
+    public SimplifiedCahCardListDto getSetByIdList(GameName gameName, String[] ids) {
+        List<CardSet> setList= setRepo.findCardSetByGameNameAndIdIn(gameName, ids);
+        List<CahCard> response = new ArrayList<>();
+        for (CardSet set:setList){
+            response.addAll(cahRepo.findCahCardByCardSet(set));
+        }
+        return new SimplifiedCahCardListDto(response);
     }
 
 

@@ -14,4 +14,5 @@ public interface CardSetRepository
 
     Optional<CardSet> findCardSetByGameNameAndSetName(GameName gameName, String setName);
     List<CardSet> findCardSetByGameName(GameName gameName);
+    List<CardSet> findCardSetByGameNameAndIdIn(GameName gameName, String[] idList);
 }

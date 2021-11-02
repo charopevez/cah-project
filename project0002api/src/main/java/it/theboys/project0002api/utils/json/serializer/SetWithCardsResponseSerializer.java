@@ -33,6 +33,7 @@ public class SetWithCardsResponseSerializer extends StdSerializer<SetWithCardsRe
             gen.writeObjectField("cardActions", card.getCardActions());
             gen.writeEndObject();
         }
+        gen.writeEndArray();
         gen.writeEndObject();
     }
 }
