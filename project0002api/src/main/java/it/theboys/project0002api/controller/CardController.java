@@ -2,7 +2,7 @@ package it.theboys.project0002api.controller;
 
 
 import it.theboys.project0002api.dto.database.QueryWithPageDTO;
-import it.theboys.project0002api.dto.http.response.PageResponseDTO;
+import it.theboys.project0002api.dto.http.response.PageResponseDto;
 import it.theboys.project0002api.enums.GameName;
 import it.theboys.project0002api.exception.database.BadRequestException;
 import it.theboys.project0002api.model.database.CardSet;
@@ -45,7 +45,7 @@ public class CardController {
      * @param filterOr   string filter or conditions
      * @param filterAnd  string filter and conditions
      * @param orderBy    sting order items by
-     * @return ResponseEntity with PageResponseDTO for {@link CardSet}
+     * @return ResponseEntity with PageResponseDto for {@link CardSet}
      */
     @GetMapping("/{gameName}/card/page")
     public ResponseEntity<?> fetchSetByPages(
@@ -57,7 +57,7 @@ public class CardController {
             @RequestParam(value = "orderBy", required = false) String orderBy) {
         try {
             // initialize variable to be returned
-            PageResponseDTO<CahCard> responseBody = new PageResponseDTO<>();
+            PageResponseDto<CahCard> responseBody = new PageResponseDto<>();
             // append gameName filter to filters
             filterAnd=filterAnd.concat(String.format(
                     "%sgameName|eq|%s",

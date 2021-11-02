@@ -1,20 +1,33 @@
 package it.theboys.project0002api.controller;
 
+import it.theboys.project0002api.dto.http.request.GameServerLaunchRequestDto;
+import it.theboys.project0002api.enums.GameName;
 import it.theboys.project0002api.service.cardgame.GameMainframeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/game/{gameName}/")
 @AllArgsConstructor
 public class GameController {
     private final GameMainframeService gameService;
 
-    public ResponseEntity<?> launchGameServer(String user, String settings) {
-        return new ResponseEntity<>(gameService.launchGameServer(user, settings), HttpStatus.OK);
+    @PostMapping("/launch")
+    public ResponseEntity<?> launchGameServer(
+            @PathVariable GameName gameName,
+            @RequestBody GameServerLaunchRequestDto<?> request) {
+        return new ResponseEntity<>(gameService.launchGameServer(request), HttpStatus.OK);
+    }
+    @GetMapping("/config")
+    public ResponseEntity<?> getGameDefaultConfig(
+            @PathVariable GameName gameName) {
+        try {
+        return new ResponseEntity<>(gameService.getGameDefaultConfig(gameName), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
     }
 
     public ResponseEntity<?> joinGameServer(String user, String password, String gameServerId) {

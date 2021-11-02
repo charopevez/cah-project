@@ -4,6 +4,7 @@ import it.theboys.project0002api.dto.database.FilterConditionDto;
 import it.theboys.project0002api.dto.database.QueryWithPageDTO;
 import it.theboys.project0002api.utils.database.FilterBuilderUtils;
 import it.theboys.project0002api.utils.database.MongoQueryBuilderUtils;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.List;
@@ -58,5 +59,10 @@ public class ControllerUtils {
         List<FilterConditionDto> orConditions=filterBuilder.createFilter(filterOr);
         // create mongodb query for db by adding filter condition
         return queryBuilder.addCondition(andConditions, orConditions, textFields);
+    }
+
+    public Pageable generatePagination(int pageSize, int pageNumber, String orderBy) {
+        FilterBuilderUtils filterBuilder = new FilterBuilderUtils();
+        return filterBuilder.getPageable(pageSize, pageNumber, orderBy);
     }
 }

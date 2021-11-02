@@ -6,12 +6,14 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import it.theboys.project0002api.enums.cah.CahCardType;
+import it.theboys.project0002api.model.database.cah.CahAction;
 import it.theboys.project0002api.model.database.cah.CahCard;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
 
-public class CardDeserializer extends JsonDeserializer {
+public class CahCardDeserializer extends JsonDeserializer {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
@@ -24,11 +26,19 @@ public class CardDeserializer extends JsonDeserializer {
             JsonNode node = nodeList.get(field);
             if (node != null) {
                 try {
-
                     method.invoke(card, objectMapper.treeToValue(node, method.getParameterTypes()[0]));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+        }
+        if (card.getCardType()== CahCardType.ANSWER) {
+            card.setCardActions(null);
+            return card;
+        } else {
+            if (card.getCardActions()==null) {
+                card.setCardActions(new CahAction());
+                return card;
             }
         }
         return card;
