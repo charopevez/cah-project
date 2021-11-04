@@ -3,7 +3,7 @@ package it.theboys.project0002api.service.cardgame;
 
 import it.theboys.project0002api.dto.http.request.GameServerLaunchRequestDto;
 import it.theboys.project0002api.enums.GameName;
-import it.theboys.project0002api.model.database.cah.CahGameConfig;
+import it.theboys.project0002api.model.cah.CahGameConfig;
 
 public interface GameMainframeService {
 

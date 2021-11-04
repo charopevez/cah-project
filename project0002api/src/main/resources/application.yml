@@ -1,0 +1,7 @@
+
+# MongoDB config
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://dbAdmin:ezr50TF0oNL4XVJU@it-the-boys-project0002.as59i.mongodb.net/projectDB?retryWrites=true&w=majority
+      database: projectDB

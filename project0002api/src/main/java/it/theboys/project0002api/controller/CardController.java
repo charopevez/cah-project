@@ -5,7 +5,7 @@ import it.theboys.project0002api.dto.database.QueryWithPageDTO;
 import it.theboys.project0002api.dto.http.response.PageResponseDto;
 import it.theboys.project0002api.enums.GameName;
 import it.theboys.project0002api.exception.database.BadRequestException;
-import it.theboys.project0002api.model.database.CardSet;
+import it.theboys.project0002api.model.CardSet;
 import it.theboys.project0002api.model.database.cah.CahCard;
 import it.theboys.project0002api.service.cardgame.CardService;
 import it.theboys.project0002api.utils.ControllerUtils;

@@ -2,14 +2,13 @@ package it.theboys.project0002api.service.cardgame;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import it.theboys.project0002api.dto.database.QueryWithPageDTO;
-import it.theboys.project0002api.dto.database.SimplifiedCahCardListDto;
 import it.theboys.project0002api.dto.http.request.AddCardRequestDto;
 import it.theboys.project0002api.dto.http.response.PagedSetWithCardsResponseDto;
 import it.theboys.project0002api.dto.http.response.SetWithCardsResponseDto;
 import it.theboys.project0002api.enums.GameName;
 import it.theboys.project0002api.exception.database.CardSetCollectionException;
 import it.theboys.project0002api.exception.database.ImmutableFieldException;
-import it.theboys.project0002api.model.database.CardSet;
+import it.theboys.project0002api.model.CardSet;
 import it.theboys.project0002api.model.database.cah.CahCard;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -101,5 +100,5 @@ public interface CardService {
 
     List<CardSet> getAllSets(GameName gameName);
 
-    SimplifiedCahCardListDto getSetByIdList(GameName gameName, String[] ids);
+    List<CahCard> getSetByIdList(GameName gameName, String[] ids);
 }

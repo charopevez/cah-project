@@ -3,8 +3,8 @@ package it.theboys.project0002api.utils.json.serializer;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import it.theboys.project0002api.model.database.cah.CahGameConfig;
-import it.theboys.project0002api.model.database.CardSet;
+import it.theboys.project0002api.model.cah.CahGameConfig;
+import it.theboys.project0002api.model.CardSet;
 
 import java.io.IOException;
 

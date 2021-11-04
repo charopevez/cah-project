@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.theboys.project0002api.dto.database.QueryWithPageDTO;
-import it.theboys.project0002api.dto.database.SimplifiedCahCardListDto;
 import it.theboys.project0002api.dto.http.request.AddCardRequestDto;
 import it.theboys.project0002api.dto.http.request.AddSetRequestDto;
 import it.theboys.project0002api.dto.http.response.PagedSetWithCardsResponseDto;
@@ -12,7 +11,7 @@ import it.theboys.project0002api.dto.http.response.SetWithCardsResponseDto;
 import it.theboys.project0002api.enums.GameName;
 import it.theboys.project0002api.exception.database.CardSetCollectionException;
 import it.theboys.project0002api.exception.database.ImmutableFieldException;
-import it.theboys.project0002api.model.database.CardSet;
+import it.theboys.project0002api.model.CardSet;
 import it.theboys.project0002api.model.database.cah.CahCard;
 import it.theboys.project0002api.repository.CahCardRepository;
 import it.theboys.project0002api.repository.CardSetRepository;
@@ -33,8 +32,7 @@ import java.util.*;
 public class CardServiceImpl implements CardService {
     private final CardSetRepository setRepo;
     private final CahCardRepository cahRepo;
-    private final String[] immutableSetFields=new String[]{"id", "gameName", "addedAt", "updatedAt"};
-
+    private final String[] immutableSetFields = new String[]{"id", "gameName", "addedAt", "updatedAt"};
 
 
     /**
@@ -83,6 +81,7 @@ public class CardServiceImpl implements CardService {
 
     /**
      * {@inheritDoc}
+     *
      * @return
      */
     @Override
@@ -92,7 +91,7 @@ public class CardServiceImpl implements CardService {
             PagedSetWithCardsResponseDto<CahCard, CardSet> responseBody = new PagedSetWithCardsResponseDto<>();
             CardSet setData = set.get();
             responseBody.setInfo(setData);
-            Page<CahCard> page=cahRepo.findPagedCahCardByCardSet(setData, pageable);
+            Page<CahCard> page = cahRepo.findPagedCahCardByCardSet(setData, pageable);
             responseBody.setPageStats(page, page.getContent());
             return responseBody;
         } else {
@@ -102,6 +101,7 @@ public class CardServiceImpl implements CardService {
 
     /**
      * {@inheritDoc}
+     *
      * @return
      */
     @Override
@@ -109,7 +109,7 @@ public class CardServiceImpl implements CardService {
         Optional<CardSet> set = setRepo.findById(id);
         if (set.isPresent()) {
             CardSet setData = set.get();
-            SetWithCardsResponseDto responseBody=new SetWithCardsResponseDto();
+            SetWithCardsResponseDto responseBody = new SetWithCardsResponseDto();
             responseBody.setSetInfo(setData);
             responseBody.setCardList(cahRepo.findCahCardByCardSet(setData));
             return responseBody;
@@ -138,7 +138,7 @@ public class CardServiceImpl implements CardService {
 //            throw new CardSetCollectionException(CardSetCollectionException.AlreadyExistException(gameName, newSetData.getSetName()));
 //        }
         CardSet updatingSet = setById.get();
-        CardSet setToSave=new ObjectUtils<CardSet>().updateObjectFromObject(updatingSet,newSetData, immutableSetFields);
+        CardSet setToSave = new ObjectUtils<CardSet>().updateObjectFromObject(updatingSet, newSetData, immutableSetFields);
         setToSave.setUpdatedAt(Instant.now().toEpochMilli());
         return setRepo.save(setToSave);
     }
@@ -152,8 +152,8 @@ public class CardServiceImpl implements CardService {
         // check if set exist
         if (setById.isPresent()) {
             // TODO find all cards by set
-            List<CahCard> cardsInSet=cahRepo.findCahCardByCardSet(setById.get());
-            for (CahCard card: cardsInSet){
+            List<CahCard> cardsInSet = cahRepo.findCahCardByCardSet(setById.get());
+            for (CahCard card : cardsInSet) {
                 cahRepo.deleteById(card.getCardId());
             }
             // delete set from db
@@ -167,15 +167,15 @@ public class CardServiceImpl implements CardService {
     public AddCardRequestDto addCard(GameName gameName, String json) throws JsonProcessingException, CardSetCollectionException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
-        AddCardRequestDto cardList= mapper.readValue(json,AddCardRequestDto.class);
-        String setId=cardList.getCardSetId();
+        AddCardRequestDto cardList = mapper.readValue(json, AddCardRequestDto.class);
+        String setId = cardList.getCardSetId();
         //get set by ID
-        Optional<CardSet> cardSet= setRepo.findById(setId);
+        Optional<CardSet> cardSet = setRepo.findById(setId);
         if (cardSet.isEmpty()) {
-          throw new CardSetCollectionException(CardSetCollectionException.NotFoundException(setId));
+            throw new CardSetCollectionException(CardSetCollectionException.NotFoundException(setId));
         }
         cardList.getCahCards().forEach(card -> {
-            Optional<CahCard> cardInDB = cahRepo.findCahCardByCardSetAndAndCardText(cardSet.get(),card.getCardText());
+            Optional<CahCard> cardInDB = cahRepo.findCahCardByCardSetAndAndCardText(cardSet.get(), card.getCardText());
             if (cardInDB.isPresent()) {
 
             } else {
@@ -190,14 +190,17 @@ public class CardServiceImpl implements CardService {
 
     /**
      * {@inheritDoc}
+     *
      * @return
      */
     @Override
     public Page<CahCard> getCardPages(QueryWithPageDTO request) {
         return cahRepo.findAll(request.getQuery(), request.getPageable());
     }
+
     /**
      * {@inheritDoc}
+     *
      * @return
      */
     @Override
@@ -211,13 +214,13 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public SimplifiedCahCardListDto getSetByIdList(GameName gameName, String[] ids) {
-        List<CardSet> setList= setRepo.findCardSetByGameNameAndIdIn(gameName, ids);
+    public List<CahCard> getSetByIdList(GameName gameName, String[] ids) {
+        List<CardSet> setList = setRepo.findCardSetByGameNameAndIdIn(gameName, ids);
         List<CahCard> response = new ArrayList<>();
-        for (CardSet set:setList){
+        for (CardSet set : setList) {
             response.addAll(cahRepo.findCahCardByCardSet(set));
         }
-        return new SimplifiedCahCardListDto(response);
+        return response;
     }
 
 

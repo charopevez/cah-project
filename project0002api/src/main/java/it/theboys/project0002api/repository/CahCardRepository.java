@@ -1,6 +1,6 @@
 package it.theboys.project0002api.repository;
 
-import it.theboys.project0002api.model.database.CardSet;
+import it.theboys.project0002api.model.CardSet;
 import it.theboys.project0002api.model.database.cah.CahCard;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,6 +1,7 @@
 package it.theboys.project0002api.controller;
 
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import it.theboys.project0002api.dto.database.QueryWithPageDTO;
 import it.theboys.project0002api.dto.http.response.PageResponseDto;
@@ -9,8 +10,10 @@ import it.theboys.project0002api.enums.GameName;
 import it.theboys.project0002api.exception.database.BadRequestException;
 import it.theboys.project0002api.exception.database.CardSetCollectionException;
 import it.theboys.project0002api.exception.database.ImmutableFieldException;
-import it.theboys.project0002api.model.database.CardSet;
+import it.theboys.project0002api.model.CardSet;
 import it.theboys.project0002api.model.database.cah.CahCard;
+import it.theboys.project0002api.model.view.CardSetView;
+import it.theboys.project0002api.model.view.CardView;
 import it.theboys.project0002api.service.cardgame.CardService;
 import it.theboys.project0002api.utils.ControllerUtils;
 import lombok.AllArgsConstructor;
@@ -43,7 +46,7 @@ public class CardSetController {
      * @return ResponseEntity with PageResponseDto for {@link CardSet}
      */
     @GetMapping("/{gameName}/set/page")
-    public ResponseEntity<?> fetchSetByPages(
+    public ResponseEntity<?> fetchSetsByPages(
             @PathVariable String gameName,
             @RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
             @RequestParam(value = "pageSize", defaultValue = "20") int pageSize,
@@ -76,7 +79,8 @@ public class CardSetController {
      * @return ResponseEntity with List of {@link CardSet}
      */
     @GetMapping("/{gameName}/set")
-    public ResponseEntity<?> fetchSet(
+    @JsonView(CardSetView.IdNameDescExp.class)
+    public ResponseEntity<?> fetchSets(
             @PathVariable GameName gameName,
             @RequestParam(value = "setList", required = false) String[] setList,
             @RequestParam(value = "filterOr", required = false) String filterOr,
@@ -111,6 +115,7 @@ public class CardSetController {
      * @throws CardSetCollectionException CardSet Validation Errors
      */
     @GetMapping("/{gameName}/set/{id}/page")
+    @JsonView(CardSetView.IdNameDescExp.class)
     public ResponseEntity<?> fetchSetPage(
             @PathVariable String gameName,
             @PathVariable String id,
@@ -132,6 +137,7 @@ public class CardSetController {
     }
 
     @GetMapping("/{gameName}/set/{id}")
+    @JsonView(CardSetView.IdNameDescExp.class)
     public ResponseEntity<?> fetchSet(
             @PathVariable String gameName,
             @PathVariable String id
