@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @SpringBootApplication
 @EnableMongoRepositories(repositoryBaseClass = BaseRepositoryHelper.class)
+
 public class Project0002apiApplication {
 
     public static void main(String[] args) {

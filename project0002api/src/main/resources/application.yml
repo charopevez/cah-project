@@ -5,3 +5,22 @@ spring:
     mongodb:
       uri: mongodb+srv://dbAdmin:ezr50TF0oNL4XVJU@it-the-boys-project0002.as59i.mongodb.net/projectDB?retryWrites=true&w=majority
       database: projectDB
+  security:
+    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: http://localhost:8080/api/v1/auth/realms/local
+#          jwk-set-uri: http://localhost:8083/auth/realms/baeldung/protocol/openid-connect/certs
+      client:
+        registration:
+          google:
+            clientId: 566528328838-r5arg4sgqivca4mdn0s54r382njme7dc.apps.googleusercontent.com
+            clientSecret: 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
+            clientAuthenticationScheme: form
+            redirectUri: http://127.0.0.1:8080/login/oauth2/code/google
+            accessTokenUri: https://oauth2.googleapis.com/token
+            userAuthorizationUri: https://accounts.google.com/o/oauth2/auth
+            scope:
+              - email
+              - profile
+              - openid
