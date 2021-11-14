@@ -5,6 +5,7 @@ spring:
     mongodb:
       uri: mongodb+srv://dbAdmin:ezr50TF0oNL4XVJU@it-the-boys-project0002.as59i.mongodb.net/projectDB?retryWrites=true&w=majority
       database: projectDB
+      auto-index-creation: true
   security:
     oauth2:
 #      resourceserver:
@@ -24,3 +25,14 @@ spring:
               - email
               - profile
               - openid
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: jp.mikhaylov@gmail.com
+    password: bnnxbgdhfhlzlogh
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true

@@ -4,8 +4,10 @@ import it.theboys.project0002api.repository.BaseRepositoryHelper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
+@EnableAsync
 @EnableMongoRepositories(repositoryBaseClass = BaseRepositoryHelper.class)
 
 public class Project0002apiApplication {

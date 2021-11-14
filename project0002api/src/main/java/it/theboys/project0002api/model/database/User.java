@@ -11,6 +11,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 @Data
 @Document(collection = "users")
@@ -18,24 +21,32 @@ public class User {
     @Id
     @JsonView(UserView.IdName.class)
     private String userId;
-    @Indexed
     @NotNull
     @JsonView(UserView.IdName.class)
+    @Indexed(unique=true)
     private String userName;
     @NotNull
     private String password;
     private String userAvatar;
     @NotNull
     @JsonView(UserView.IdNameContact.class)
+    @Indexed(unique=true)
     @Email(message = "Email should be valid")
     private String userContact;
     private boolean isActive;
-    private boolean isVerified=false;
-
+    private boolean isVerified = false;
+    private String verificationCode;
     private Provider userProvider;
     private String userLanguage;
-    private UserRole userRole = UserRole.GUEST;
+    private Collection<UserRole> userRole = new ArrayList<>(Collections.singleton(UserRole.GUEST));
     private long registeredAt;
     private long lastVisitedAt;
     private long lastModifiedAt;
+
+    public void addUserRole(UserRole role) {
+        userRole.add(role);
+    }
+    public void removeUserRole(UserRole role) {
+        userRole.remove(role);
+    }
 }
