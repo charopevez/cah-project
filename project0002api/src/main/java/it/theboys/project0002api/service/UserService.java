@@ -14,14 +14,14 @@ public interface UserService extends UserDetailsService {
 
 
     User register(User user) throws UserCollectionException;
-    String guestLogin();
-    String login();
+
 
     @Override
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 
-    String getUserList();
-    User getUser(String id) throws UserCollectionException;
+    User getUserById(String id) throws UserCollectionException;
+
+    User getUserByUsername(String username) throws UserCollectionException;
 
     User verifyUser(String code) throws UserCollectionException;
 

@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class CahPlayer {
     
-    private String player;
+    private String playerName;
 
     private List<CahCard> playerHand;
 
@@ -15,7 +15,9 @@ public class CahPlayer {
 
     private List<CahCard> playerAnswer;
 
-    private int points;
+    private int playerScore;
+
+    private  String playerAvatar;
 
     public void draw(CahCard card) {
         playerHand.add(card);

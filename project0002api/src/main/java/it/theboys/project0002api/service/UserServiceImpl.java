@@ -1,12 +1,9 @@
 package it.theboys.project0002api.service;
 
 import it.theboys.project0002api.enums.UserRole;
-import it.theboys.project0002api.exception.database.CardSetCollectionException;
 import it.theboys.project0002api.exception.database.UserCollectionException;
-import it.theboys.project0002api.model.CardSet;
 import it.theboys.project0002api.model.SecUserDetails;
 import it.theboys.project0002api.model.database.User;
-import it.theboys.project0002api.model.database.cah.CahCard;
 import it.theboys.project0002api.repository.UserRepository;
 import it.theboys.project0002api.storage.GuestUserStorage;
 import lombok.AllArgsConstructor;
@@ -55,7 +52,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             String username = user.getUserName();
             List<String> usernamesInDb = userRepo.findDistinctUserName();
             List<String> usernamesInStorage = GuestUserStorage.getInstance().getUsernameList();
-            if (usernamesInDb.contains(username)|| usernamesInStorage.contains(username))
+            if (usernamesInDb.contains(username) || usernamesInStorage.contains(username))
                 throw new UserCollectionException(UserCollectionException.UsernameConstraintException(username));
             user.setActive(true);
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -66,36 +63,32 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     }
 
-    @Override
-    public String guestLogin() {
-        return null;
-    }
-
-    @Override
-    public String login() {
-        return null;
-    }
 
     @SneakyThrows
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> inDB = userRepo.findUserByUserName(username);
-        if (!inDB.isEmpty()) return new SecUserDetails(inDB.get());
-        User guest=GuestUserStorage.getInstance().getUserPassword(username);
-        if (guest!=null) return new SecUserDetails(guest);
+        if (inDB.isPresent()) return new SecUserDetails(inDB.get());
+        User guest = GuestUserStorage.getInstance().getUserPassword(username);
+        if (guest != null) return new SecUserDetails(guest);
         throw new UserCollectionException(UserCollectionException.NotFoundException(username));
     }
 
-    @Override
-    public String getUserList() {
-        return null;
-    }
 
     @Override
-    public User getUser(String id) throws UserCollectionException {
+    public User getUserById(String id) throws UserCollectionException {
         Optional<User> inDB = userRepo.findById(id);
         if (inDB.isEmpty()) throw new UserCollectionException(UserCollectionException.NotFoundException(id));
         return inDB.get();
+    }
+
+    @Override
+    public User getUserByUsername(String username) throws UserCollectionException {
+        Optional<User> inDB = userRepo.findUserByUserName(username);
+        if (inDB.isPresent()) return inDB.get();
+        User guest = GuestUserStorage.getInstance().getUserPassword(username);
+        if (guest != null) return guest;
+        throw new UserCollectionException(UserCollectionException.NotFoundException(username));
     }
 
     @Override
