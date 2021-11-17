@@ -1,8 +1,9 @@
-package it.theboys.project0002api.service.cardgame;
+package it.theboys.project0002api.service;
 
 import it.theboys.project0002api.dto.http.request.GameServerLaunchRequestDto;
 import it.theboys.project0002api.enums.GameName;
 import it.theboys.project0002api.model.cah.CahGameConfig;
+import it.theboys.project0002api.service.cardgame.CardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class GameMainframeServiceImpl implements GameMainframeService {
     @Override
     public String joinGameServer(String player, String gamePassword, String gameServerId) {
         if (gamePassword.equals("pass")) {
-        return String.format("Successfully joined to server %s", gameServerId );
+            return String.format("Successfully joined to server %s", gameServerId);
         }
         return "Password error";
     }
@@ -35,9 +36,9 @@ public class GameMainframeServiceImpl implements GameMainframeService {
     @Override
     public String terminateGameServer(String user, String gameServerId) {
         if (!gameServerId.equals("test2")) {
-            return String.format("Could not found server  with id%s", gameServerId );
+            return String.format("Could not found server  with id%s", gameServerId);
         }
-        return String.format("Successfully terminated server %s", gameServerId );
+        return String.format("Successfully terminated server %s", gameServerId);
     }
 
     @Override
