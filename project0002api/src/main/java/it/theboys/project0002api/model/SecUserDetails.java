@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class SecUserDetails implements UserDetails {
     private final User user;
@@ -17,6 +18,9 @@ public class SecUserDetails implements UserDetails {
         this.user = user;
         authorities = new ArrayList<>();
         user.getUserRole().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.name())));
+    }
+    public String getUserId(){
+        return user.getUserId();
     }
 
     @Override
@@ -60,5 +64,9 @@ public class SecUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return user.isActive();
+    }
+
+    public String getUserAvatar() {
+        return user.getUserAvatar();
     }
 }

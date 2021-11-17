@@ -3,6 +3,7 @@ package it.theboys.project0002api.security.filter;
 import it.theboys.project0002api.controller.UserController;
 import it.theboys.project0002api.model.SecUserDetails;
 import it.theboys.project0002api.utils.AppSecurityUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Slf4j
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager manager;
 
@@ -26,6 +28,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         String u = request.getParameter("userName");
         String p = request.getParameter("password");
+        log.debug(String.valueOf(request));
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(u, p);
         return manager.authenticate(token);
     }

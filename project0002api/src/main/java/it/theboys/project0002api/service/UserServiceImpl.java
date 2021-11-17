@@ -1,5 +1,6 @@
 package it.theboys.project0002api.service;
 
+import com.mongodb.MongoWriteException;
 import it.theboys.project0002api.enums.UserRole;
 import it.theboys.project0002api.exception.database.UserCollectionException;
 import it.theboys.project0002api.model.SecUserDetails;
@@ -9,13 +10,16 @@ import it.theboys.project0002api.storage.GuestUserStorage;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ConstraintViolationException;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +28,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @AllArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     private UserRepository userRepo;
@@ -47,7 +52,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             user.setActive(true);
             user.setRegisteredAt(Instant.now().toEpochMilli());
-            return userRepo.save(user);
+            try {
+                return userRepo.save(user);
+            } catch (DuplicateKeyException e) {
+                throw new UserCollectionException(UserCollectionException.ConstraintViolationException(e.getMessage()));
+            }
+
         } else {
             String username = user.getUserName();
             List<String> usernamesInDb = userRepo.findDistinctUserName();
@@ -60,7 +70,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             // add user to storage
             return GuestUserStorage.getInstance().add(user);
         }
-
     }
 
 

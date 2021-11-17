@@ -15,7 +15,10 @@ public class AppSecurityUtils {
                 .withSubject(u.getUsername())
                 .withExpiresAt(new Date((System.currentTimeMillis() + 10 * 60 * 1000)))
                 .withIssuer(i)
-                .withClaim("roles", u.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                .withClaim("userRoles", u.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                .withClaim( "userId", u.getUserId())
+                .withClaim( "userAvatar", u.getUserAvatar())
+                .withClaim( "userName", u.getUsername())
                 .sign(a);
     }
 }
