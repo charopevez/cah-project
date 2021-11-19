@@ -43,4 +43,4 @@ project:
       baseUrl: https://itboys-project0002.s3.ap-northeast-1.amazonaws.com/img/
 
 server:
-  port: ${PORT:8080}
+  port: 8080
