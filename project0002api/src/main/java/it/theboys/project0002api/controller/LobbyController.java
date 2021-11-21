@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RestController
 @RequestMapping("/api/v1")
 public class LobbyController {
@@ -27,9 +29,9 @@ public class LobbyController {
     @PostMapping("/{gameName}/lobby/join")
     public ResponseEntity<?> joinLobby(
             @PathVariable GameName gameName,
-            @RequestBody String request) throws LobbyException {
+            Principal principal) throws LobbyException {
         try {
-            return new ResponseEntity<>(lobbyService.joinLobby(gameName, request), HttpStatus.OK);
+            return new ResponseEntity<>(lobbyService.joinLobby(gameName, principal.getName()), HttpStatus.OK);
         } catch (LobbyException le){
             return new ResponseEntity<>(le.getMessage(),HttpStatus.SERVICE_UNAVAILABLE);
         }

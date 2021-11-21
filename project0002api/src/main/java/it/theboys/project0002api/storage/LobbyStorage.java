@@ -4,13 +4,16 @@ import it.theboys.project0002api.enums.GameName;
 import it.theboys.project0002api.model.Lobby;
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
 public class LobbyStorage {
     private static Map<GameName, Lobby> lobbyList;
     private static LobbyStorage instance;
+
 
     private LobbyStorage() {
         lobbyList = new HashMap<>();
@@ -27,9 +30,14 @@ public class LobbyStorage {
         return instance;
     }
 
-    public Map<GameName, Lobby> getLobbyList() {
-        return lobbyList;
+    public List<Lobby> getLobbyList() {
+
+        return new ArrayList<Lobby>(lobbyList.values());
     }
+
+    public Map<GameName, Lobby> getLobbyMap(){
+        return lobbyList;
+    };
     public void setLobby(Lobby lobby) {
         lobbyList.put(lobby.getLobbyId(), lobby);
     }
