@@ -1,7 +1,7 @@
 package it.theboys.project0002api.service;
 
 import it.theboys.project0002api.dto.http.request.GameServerLaunchRequestDto;
-import it.theboys.project0002api.enums.GameName;
+import it.theboys.project0002api.enums.db.GameName;
 import it.theboys.project0002api.model.cah.CahGameConfig;
 import it.theboys.project0002api.service.cardgame.CardService;
 import lombok.RequiredArgsConstructor;

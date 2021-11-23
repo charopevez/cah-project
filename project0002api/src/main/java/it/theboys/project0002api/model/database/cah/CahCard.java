@@ -3,7 +3,7 @@ package it.theboys.project0002api.model.database.cah;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import it.theboys.project0002api.enums.GameName;
+import it.theboys.project0002api.enums.db.GameName;
 import it.theboys.project0002api.enums.cah.CahCardType;
 import it.theboys.project0002api.model.database.CardEdition;
 import it.theboys.project0002api.model.CardSet;

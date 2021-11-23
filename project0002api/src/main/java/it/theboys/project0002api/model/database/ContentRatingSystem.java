@@ -1,7 +1,7 @@
 package it.theboys.project0002api.model.database;
 
 
-import it.theboys.project0002api.enums.BracketRule;
+import it.theboys.project0002api.enums.db.BracketRule;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

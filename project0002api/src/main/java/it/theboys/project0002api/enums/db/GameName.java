@@ -1,4 +1,4 @@
-package it.theboys.project0002api.enums;
+package it.theboys.project0002api.enums.db;
 
 import it.theboys.project0002api.model.database.cah.CahCard;
 import lombok.AllArgsConstructor;

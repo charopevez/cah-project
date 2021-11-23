@@ -1,7 +1,7 @@
 package it.theboys.project0002api.utils.database;
 
 import it.theboys.project0002api.dto.database.FilterConditionDto;
-import it.theboys.project0002api.enums.FilterOperationEnum;
+import it.theboys.project0002api.enums.db.FilterOperationEnum;
 import it.theboys.project0002api.exception.database.BadRequestException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;

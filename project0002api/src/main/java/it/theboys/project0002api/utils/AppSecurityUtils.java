@@ -12,7 +12,7 @@ public class AppSecurityUtils {
     private Algorithm a = Algorithm.HMAC256("ecchi".getBytes());
     public String generateJWT(SecUserDetails u, String i, int period){
         return JWT.create()
-                .withSubject(u.getUsername())
+                .withSubject(u.getUserId())
                 .withExpiresAt(new Date((System.currentTimeMillis() + 10 * 60 * 1000)))
                 .withIssuer(i)
                 .withClaim("userRoles", u.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))

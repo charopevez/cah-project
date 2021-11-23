@@ -1,6 +1,6 @@
 package it.theboys.project0002api.model.database;
 
-import it.theboys.project0002api.enums.GameName;
+import it.theboys.project0002api.enums.db.GameName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;

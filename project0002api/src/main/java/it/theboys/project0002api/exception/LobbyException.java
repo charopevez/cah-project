@@ -1,6 +1,6 @@
 package it.theboys.project0002api.exception;
 
-import it.theboys.project0002api.enums.GameName;
+import it.theboys.project0002api.enums.db.GameName;
 
 public class LobbyException extends Throwable {
     public LobbyException(String message){

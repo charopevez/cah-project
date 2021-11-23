@@ -1,7 +1,7 @@
 package it.theboys.project0002api.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import it.theboys.project0002api.enums.GameName;
+import it.theboys.project0002api.enums.db.GameName;
 import it.theboys.project0002api.enums.cah.CahSetExpansion;
 import it.theboys.project0002api.model.view.CardSetView;
 import lombok.Data;
@@ -11,7 +11,6 @@ import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Data
 @Document(collection = "cardSets")

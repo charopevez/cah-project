@@ -1,8 +1,7 @@
 package it.theboys.project0002api.storage;
 
-import it.theboys.project0002api.enums.GameName;
+import it.theboys.project0002api.enums.db.GameName;
 import it.theboys.project0002api.model.Lobby;
-import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.HashMap;

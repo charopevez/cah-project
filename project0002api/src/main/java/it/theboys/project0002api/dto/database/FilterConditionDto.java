@@ -1,6 +1,6 @@
 package it.theboys.project0002api.dto.database;
 
-import it.theboys.project0002api.enums.FilterOperationEnum;
+import it.theboys.project0002api.enums.db.FilterOperationEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

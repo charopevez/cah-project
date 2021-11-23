@@ -13,6 +13,7 @@ public class SecUserDetails implements UserDetails {
     private final User user;
     private final Collection<SimpleGrantedAuthority> authorities;
 
+
     public SecUserDetails(User user) {
 
         this.user = user;

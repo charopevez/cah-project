@@ -1,7 +1,6 @@
 package it.theboys.project0002api.service;
 
-import com.mongodb.MongoWriteException;
-import it.theboys.project0002api.enums.UserRole;
+import it.theboys.project0002api.enums.db.UserRole;
 import it.theboys.project0002api.exception.database.UserCollectionException;
 import it.theboys.project0002api.model.SecUserDetails;
 import it.theboys.project0002api.model.database.User;
@@ -19,7 +18,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.validation.ConstraintViolationException;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;

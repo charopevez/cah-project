@@ -1,6 +1,6 @@
 package it.theboys.project0002api.controller;
 
-import it.theboys.project0002api.enums.GameName;
+import it.theboys.project0002api.enums.db.GameName;
 import it.theboys.project0002api.exception.LobbyException;
 import it.theboys.project0002api.model.Lobby;
 import it.theboys.project0002api.service.LobbyService;
@@ -39,9 +39,9 @@ public class LobbyController {
     @PostMapping("/{gameName}/lobby/leave")
     public ResponseEntity<?> leaveLobby(
             @PathVariable GameName gameName,
-            @RequestBody String request) throws LobbyException {
+            Principal principal) throws LobbyException {
         try {
-            return new ResponseEntity<>(lobbyService.leaveLobby(gameName, request), HttpStatus.OK);
+            return new ResponseEntity<>(lobbyService.leaveLobby(gameName, principal.getName()), HttpStatus.OK);
         } catch (LobbyException le){
             return new ResponseEntity<>(le.getMessage(),HttpStatus.NOT_FOUND);
         }

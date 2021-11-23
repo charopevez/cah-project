@@ -1,10 +1,11 @@
 package it.theboys.project0002api.model.database;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import it.theboys.project0002api.enums.Provider;
-import it.theboys.project0002api.enums.UserRole;
+import it.theboys.project0002api.enums.db.Provider;
+import it.theboys.project0002api.enums.db.UserRole;
 import it.theboys.project0002api.model.view.UserView;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,6 +17,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Data
+@NoArgsConstructor
 @Document(collection = "users")
 public class User {
     @Id
