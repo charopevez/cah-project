@@ -85,7 +85,7 @@ public class MongoQueryBuilderUtils {
     private void extractConditions(List<Criteria> orCriteriaOperator, List<FilterConditionDto> filterOrConditions, String[] textFields) {
         filterOrConditions.stream().map(
                 condition -> {
-                    if (Arrays.stream(textFields).toList().contains(condition.getField())&&
+                    if (Arrays.stream(textFields).collect(Collectors.toList()).contains(condition.getField())&&
                             condition.getOperator()== FilterOperationEnum.CONTAINS){
                         ignoreCaseConditions.put(condition.getField(), condition.getValue().toString());
                         return null;

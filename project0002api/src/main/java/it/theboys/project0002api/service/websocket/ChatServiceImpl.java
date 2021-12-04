@@ -27,25 +27,25 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public void send(ChatMessage chatMessage) {
-        var roomId = chatMessage.getTo();
+        var roomId = chatMessage.getRoomId();
         chatMessage.setTimestamp(Instant.now().toEpochMilli());
         // check if chatRoom exists
-        var isRoomExists = ChatStorage.getInstance().getRoomList().contains(roomId);
-        if (isRoomExists) {
-            // save message to list
-            if (roomId.equals("global")) {
-                //save global chat to DB
-                chatMessage.setStatus(MessageStatus.PUBLISHED);
-                ChatMessage inDb= chatRepo.save(chatMessage);
-            } else {
-                //save to Storage
-                chatMessage.setStatus(MessageStatus.PUBLISHED);
-                ChatMessage inDb= chatRepo.save(chatMessage);
-            }
+//        var isRoomExists = ChatStorage.getInstance().getRoomList().contains(roomId);
+//        if (isRoomExists) {
+//            // save message to list
+//            if (roomId.equals("global")) {
+//                //save global chat to DB
+//                chatMessage.setStatus(MessageStatus.PUBLISHED);
+//                ChatMessage inDb= chatRepo.save(chatMessage);
+//            } else {
+//                //save to Storage
+//                chatMessage.setStatus(MessageStatus.PUBLISHED);
+//                ChatMessage inDb= chatRepo.save(chatMessage);
+//            }
                 template.convertAndSend(CHAT_WS_OUTBOUND+roomId, chatMessage);
-        } else {
-            log.error(String.format("Room with id %s not found", roomId));
-        }
+//        } else {
+//            log.error(String.format("Room with id %s not found", roomId));
+//        }
     }
 
 }

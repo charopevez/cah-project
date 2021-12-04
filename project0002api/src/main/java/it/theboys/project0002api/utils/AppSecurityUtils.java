@@ -13,7 +13,7 @@ public class AppSecurityUtils {
     public String generateJWT(SecUserDetails u, String i, int period){
         return JWT.create()
                 .withSubject(u.getUserId())
-                .withExpiresAt(new Date((System.currentTimeMillis() + 10 * 60 * 1000)))
+                .withExpiresAt(new Date((System.currentTimeMillis() + period)))
                 .withIssuer(i)
                 .withClaim("userRoles", u.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .withClaim( "userId", u.getUserId())

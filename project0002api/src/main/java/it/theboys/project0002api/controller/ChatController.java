@@ -37,16 +37,11 @@ public class ChatController {
 //    }
     @MessageMapping(CHAT_WS_OUTBOUND+"{roomId}")
 //    @SendTo("/chat/global")
-    public void sendTestMessage(@DestinationVariable String roomId, @Payload ChatMessage chatMessage) {
+        public void sendTestMessage(@DestinationVariable String roomId, @Payload ChatMessage chatMessage) {
         // ToDo error handler
-
+        log.info(roomId);
         log.info(String.valueOf(chatService));
         chatService.send(chatMessage);
     }
 
-    @SubscribeMapping("/chat/global")
-    @SendTo("/chat/global")
-    public String onSubscribe() {
-        return "SUBSCRIBED to chat";
-    }
 }

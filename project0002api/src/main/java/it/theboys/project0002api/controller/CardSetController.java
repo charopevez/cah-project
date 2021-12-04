@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import it.theboys.project0002api.dto.database.QueryWithPageDTO;
 import it.theboys.project0002api.dto.http.response.PageResponseDto;
 import it.theboys.project0002api.dto.http.response.PagedSetWithCardsResponseDto;
+import it.theboys.project0002api.enums.cah.CahSetExpansion;
 import it.theboys.project0002api.enums.db.GameName;
 import it.theboys.project0002api.exception.database.BadRequestException;
 import it.theboys.project0002api.exception.database.CardSetCollectionException;
@@ -211,6 +212,16 @@ public class CardSetController {
         try {
             cardService.deleteSet(id);
             return new ResponseEntity<>("Successfully deleted set with id " + id, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("{gameName}/set_expansions")
+    public ResponseEntity<?> getSetExpansions(
+            @PathVariable GameName gameName) throws CardSetCollectionException {
+        try {
+            return new ResponseEntity<>(CahSetExpansion.values(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }

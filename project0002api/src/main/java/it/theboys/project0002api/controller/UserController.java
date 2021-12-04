@@ -89,6 +89,8 @@ public class UserController {
      */
     public static void TokenResponse(HttpServletResponse response, String refresh, String access) throws IOException {
         Map<String, String> responseBody = new HashMap<>();
+        log.info( access);
+        log.info( refresh);
         responseBody.put("access_token", access);
         responseBody.put("refresh_token", refresh);
         response.setContentType(APPLICATION_JSON_VALUE);
