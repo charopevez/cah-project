@@ -38,8 +38,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         SecUserDetails u = (SecUserDetails) authResult.getPrincipal();
         String access = new AppSecurityUtils().generateJWT(u, request.getRequestURL().toString(), 10*60*1000);
         String refresh = new AppSecurityUtils().generateJWT(u, request.getRequestURL().toString(), 5*60*60*1000);
-        log.info( access);
-        log.info(refresh);
         UserController.TokenResponse(response,refresh,access);
     }
 }

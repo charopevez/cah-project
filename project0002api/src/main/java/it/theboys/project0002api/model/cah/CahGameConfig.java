@@ -6,7 +6,9 @@ import it.theboys.project0002api.model.CardSet;
 import it.theboys.project0002api.model.view.CardSetView;
 import it.theboys.project0002api.utils.json.serializer.CahGameConfigSerializer;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -17,5 +19,6 @@ public class CahGameConfig {
     String serverPassword;
     int timeLimit = 60;
     int scoreLimit = 8;
-    List<CardSet> setList;
+    List<CardSet> setList=new ArrayList<>();
+    List<String> setIdList;
 }
