@@ -1,6 +1,7 @@
 package it.theboys.project0002api.model.database.cah;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.theboys.project0002api.enums.db.GameName;
@@ -22,7 +23,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @CompoundIndexes({
-        @CompoundIndex(name = "set_name_idx", def = "{'cardSet' : 1, 'cardName': 1}", unique = true)
+        @CompoundIndex(name = "set_name_idx", def = "{'cardSet' : 1, 'cardText': 1}", unique = true)
 })
 @JsonDeserialize(using = CahCardDeserializer.class)
 @Document(collection = "CAHCards")
@@ -52,5 +53,10 @@ public class CahCard {
     private CardEdition cardEdition;
     private long addedAt;
     private long updatedAt;
-
+    @JsonProperty("isDeleted")
+    @JsonView(CardView.CahCardEdit.class)
+    private boolean isDeleted=false;
+    @JsonProperty("isValid")
+    @JsonView(CardView.CahCardEdit.class)
+    private boolean isValid=true;
 }
