@@ -3,7 +3,7 @@ package it.theboys.project0002api.controller;
 import it.theboys.project0002api.enums.db.GameName;
 import it.theboys.project0002api.exception.LobbyException;
 import it.theboys.project0002api.model.Lobby;
-import it.theboys.project0002api.service.LobbyService;
+import it.theboys.project0002api.service.MainLobbyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +13,9 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/v1")
-public class LobbyController {
+public class MainLobbyController {
     @Autowired
-    private LobbyService lobbyService;
+    private MainLobbyService lobbyService;
 
     @GetMapping("/lobby")
     public ResponseEntity<?> getLobbyList(){

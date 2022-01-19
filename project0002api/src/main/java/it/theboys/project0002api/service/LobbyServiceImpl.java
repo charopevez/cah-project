@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class LobbyServiceImpl implements LobbyService {
+public class LobbyServiceImpl implements MainLobbyService {
 
     @Override
     public List<Lobby> getLobbyList() {

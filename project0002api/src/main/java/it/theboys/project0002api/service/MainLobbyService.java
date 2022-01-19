@@ -6,7 +6,7 @@ import it.theboys.project0002api.model.Lobby;
 
 import java.util.List;
 
-public interface LobbyService {
+public interface MainLobbyService {
     List<Lobby> getLobbyList();
     Lobby getLobby(GameName gameName);
     Lobby joinLobby(GameName gameName, String userId) throws LobbyException;
